@@ -1,15 +1,14 @@
-// console.clear();
-// console.log("Sandeep's Todo List")
-import { TodoCollection } from "./todoCollection.js";
 import { TodoItem } from "./todoItem.js";
 import inquirer from 'inquirer';
+import { JsonTodoCollection } from "./jsonTodoCollection.js";
 let todos = [
     new TodoItem(1, 'Buy groceries'),
     new TodoItem(2, 'Collect Tickets'),
     new TodoItem(3, 'Get Shoes'),
     new TodoItem(4, 'Call Raymond', true),
 ];
-let collection = new TodoCollection('Sandeep', todos);
+// let collection: TodoCollection = new TodoCollection('Sandeep', todos);
+let collection = new JsonTodoCollection('sandeep', todos);
 let showCompleted = true;
 console.clear();
 // console.log(`${collection.userName}'s Todo List`);
