@@ -35,7 +35,7 @@ function promptUser(): void {
         message:"Choose option",
         choices: Object.values(Commands) 
     }).then(answers=>{
-        if(answers["commands"] !== Commands.Quit){
+        if(answers["command"] !== Commands.Quit){
             promptUser();
         }
     })
