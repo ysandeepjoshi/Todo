@@ -10,20 +10,25 @@ let todos = [
     new TodoItem(4, 'Call Raymond', true),
 ];
 let collection = new TodoCollection('Sandeep', todos);
+let showCompleted = true;
 console.clear();
 // console.log(`${collection.userName}'s Todo List`);
 function displayTodoList() {
     console.log(`${collection.userName}'s Todo List `
         + `(${collection.getItemCounts().incomplete} items to do)`);
-    collection.removeComplete();
-    collection.getTodoItems(true).forEach(item => item.printDetails());
+    //collection.removeComplete();
+    //collection.getTodoItems(true).forEach(item => item.printDetails());
+    collection.getTodoItems(showCompleted)
+        .forEach((item) => item.printDetails());
 }
 var Commands;
 (function (Commands) {
+    Commands["Toggle"] = "Show/Hide Completed";
     Commands["Quit"] = "Quit";
 })(Commands || (Commands = {}));
 function promptUser() {
     console.clear();
+    console.log(showCompleted);
     displayTodoList();
     inquirer.prompt({
         type: "list",
@@ -31,8 +36,11 @@ function promptUser() {
         message: "Choose option",
         choices: Object.values(Commands)
     }).then(answers => {
-        if (answers["command"] !== Commands.Quit) {
-            promptUser();
+        switch (answers.command) {
+            case Commands.Toggle:
+                showCompleted = !showCompleted;
+                promptUser();
+                break;
         }
     });
 }
