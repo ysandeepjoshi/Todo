@@ -12,7 +12,9 @@ let todos = [
 ];
 let collection = new todoCollection_1.TodoCollection('Sandeep', todos);
 console.clear();
-console.log(`${collection.userName}'s Todo List`);
+// console.log(`${collection.userName}'s Todo List`);
+console.log(`${collection.userName}'s Todo List `
+    + `(${collection.getItemCounts().incomplete} items to do)`);
 //let newId:number = collection.addTodo('Clean the house');
 //let todoItem: TodoItem = collection.getTodoById(newId);
 //todoItem.printDetails();
