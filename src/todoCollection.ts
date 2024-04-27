@@ -24,5 +24,9 @@ export class TodoCollection {
             todoItem.complete = complete;
         }
     }
+    getTodoItems(includeComplete:boolean):TodoItem[]{
+        return[...this.itemMap.values()]
+        .filter(item=> includeComplete || !item.complete);
+    }
 
 }
