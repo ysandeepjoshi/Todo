@@ -1,25 +1,44 @@
 // console.clear();
 // console.log("Sandeep's Todo List")
 
-import { TodoCollection } from "./todoCollection";
-import { TodoItem } from "./todoItem";
+import { TodoCollection } from "./todoCollection.js";
+import { TodoItem } from "./todoItem.js";
+import inquirer from 'inquirer';
 
-let todos : TodoItem[]= [
-    new  TodoItem(1, 'Buy groceries'),
-    new  TodoItem(2, 'Collect Tickets'),    
-    new  TodoItem(3, 'Get Shoes'),
-    new  TodoItem(4, 'Call Raymond',true),
+let todos: TodoItem[] = [
+    new TodoItem(1, 'Buy groceries'),
+    new TodoItem(2, 'Collect Tickets'),
+    new TodoItem(3, 'Get Shoes'),
+    new TodoItem(4, 'Call Raymond', true),
 ]
 
-let collection: TodoCollection = new  TodoCollection('Sandeep',todos);
+let collection: TodoCollection = new TodoCollection('Sandeep', todos);
+
 console.clear();
 // console.log(`${collection.userName}'s Todo List`);
+function displayTodoList(): void {
+    console.log(`${collection.userName}'s Todo List `
+        + `(${collection.getItemCounts().incomplete} items to do)`);
+    collection.removeComplete();
+    collection.getTodoItems(true).forEach(item => item.printDetails());
+}
 
-console.log(`${collection.userName}'s Todo List `
-    + `(${collection.getItemCounts().incomplete} items to do)`)
-//let newId:number = collection.addTodo('Clean the house');
-//let todoItem: TodoItem = collection.getTodoById(newId);
-//todoItem.printDetails();
-//collection.addTodo(todoItem);
-collection.removeComplete();
-collection.getTodoItems(true).forEach(item => item.printDetails());
+enum Commands {
+    Quit = "Quit"
+}
+function promptUser(): void {
+    console.clear();
+    displayTodoList();
+    inquirer.prompt({
+        type: "list",
+        name: "command",
+        message:"Choose option",
+        choices: Object.values(Commands) 
+    }).then(answers=>{
+        if(answers["commands"] !== Commands.Quit){
+            promptUser();
+        }
+    })
+}
+
+promptUser();
